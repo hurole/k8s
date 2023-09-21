@@ -14,6 +14,11 @@ spec:
       encapsulation: VXLANCrossSubnet
       natOutgoing: Enabled
       nodeSelector: all()
+    - blockSize: 122
+      cidr: fd00::1:0:0:0:0/64
+      encapsulation: None
+      natOutgoing: Enabled
+      nodeSelector: all()
 
 ---
 
