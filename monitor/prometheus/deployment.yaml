@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus
+  namespace: monitor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus
+  template:
+    metadata:
+      labels:
+        app: prometheus
+    spec:
+      nodeSelector: 
+        k8s: master
+      containers:
+        - name: prometheus
+          image: prom/prometheus:v2.51.0
+          ports:
+            - containerPort: 9090
+          volumeMounts:
+            - name: data
+              mountPath: /prometheus
+            # - name: config
+            #   mountPath: /etc/prometheus
+            #   readOnly: true
+          # resources:
+          #   requests:
+          #     cpu: 500m
+          #     memory: 512Mi
+          #   limits:
+          #     cpu: 1000m
+          #     memory: 700Mi
+      volumes:
+        - name: data
+          hostPath: 
+            path: /srv/prometheus/data
+            type: DirectoryOrCreate
+        # - name: config
+        #   configMap:
+        #     name: config-prometheus
