@@ -4,7 +4,6 @@ metadata:
   name: prometheus
   namespace: monitor
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: prometheus
@@ -23,9 +22,9 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /prometheus
-            # - name: config
-            #   mountPath: /etc/prometheus
-            #   readOnly: true
+            - name: config
+              mountPath: /etc/prometheus
+              readOnly: true
           # resources:
           #   requests:
           #     cpu: 500m
@@ -38,6 +37,6 @@ spec:
           hostPath: 
             path: /srv/prometheus/data
             type: DirectoryOrCreate
-        # - name: config
-        #   configMap:
-        #     name: config-prometheus
+        - name: config
+          configMap:
+            name: config-prometheus
